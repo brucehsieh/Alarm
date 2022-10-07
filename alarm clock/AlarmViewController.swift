@@ -12,9 +12,8 @@ class AlarmViewController: UIViewController {
     
     private let sections: [Section] = [.wakeUp, .alarms]
     
-    var alarmDatas: [AlarmModel] = [] {
+    var alarmSave = AlarmSave() {
         didSet {
-            print(alarmDatas)
             alarmTableView.reloadData()
         }
     }
@@ -89,7 +88,7 @@ extension AlarmViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch sections[section] {
         case .wakeUp:  return 1
-        case .alarms : return alarmDatas.count
+        case .alarms : return alarmSave.alarms.count
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -106,7 +105,7 @@ extension AlarmViewController: UITableViewDataSource {
     
     private func configureAlarmTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AlarmOtherTableViewCell.identifier, for: indexPath) as? AlarmOtherTableViewCell else { return UITableViewCell() }
-        let alarm = alarmDatas[indexPath.row]
+        let alarm = alarmSave.alarms[indexPath.row]
         cell.textLabel?.text = alarm.timeString
         cell.detailTextLabel?.text = alarm.noteLabel
         return cell
@@ -127,7 +126,7 @@ extension AlarmViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            alarmDatas.remove(at: indexPath.row)
+            alarmSave.remove(indexPath.row)
         }
     }
 }
@@ -138,23 +137,35 @@ extension AlarmViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1{
             let rootVC = AddAlarmViewController()
-            let selectedAlarm = alarmDatas[indexPath.row]
+            let selectedAlarm = alarmSave.alarms[indexPath.row]
             rootVC.alarmModel = selectedAlarm
+            rootVC.updateAlarmListDelegate = self
+//            rootVC.editingModelWithIndexPath = self
+            rootVC.indexPath = indexPath
             let navVC = UINavigationController(rootViewController: rootVC)
             present(navVC, animated: true)
             
             tableView.deselectRow(at: indexPath, animated: false)
         }
     }
-    
-    //Hello
 }
 // MARK: - UpdateAlaramListDelegate
 extension AlarmViewController: UpdateAlaramListDelegate {
-    func updateAlarmList(alarmData: AlarmModel) {
-        
-        self.alarmDatas.append(alarmData)
-    }
+    func updateAlarmList(alarmData: AlarmModel, index: Int) {
+        if alarmSave.isEdit == false{
+        alarmSave.append(alarmData)
+        }else{
+        alarmSave.edit(alarmData, index)
+        }
+}
+
+//extension AlarmViewController: EdingModelWithIndexPath {
+//    func update(alarm: AlarmModel, indexPath: IndexPath) {
+//        self.alarmSave.alarms[indexPath.row] = alarm
+//        self.alarmTableView.reloadData()
+//    }
+//
+//
 }
 
 // MARK: - Nested Types

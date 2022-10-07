@@ -13,15 +13,7 @@ class RepeatAlarmViewController: UIViewController {
     weak var repeatAlarmDelegate: UpadteRepeatLabelDelegate?
     
     var selectedDays:Set<Day> = []
-    
-//    private let saveButton: UIButton = {
-//        let uib = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-//        uib.setTitle("DONE", for: .normal)
-//        uib.backgroundColor = .link
-//        uib.layer.cornerRadius = 20
-//        return uib
-//    }()
-    
+
     //MARK: - UI
     let repeatTableView: UITableView = {
         let tableView = UITableView()
@@ -36,7 +28,6 @@ class RepeatAlarmViewController: UIViewController {
         initView()
         setViews()
         setLayouts()
-        view.backgroundColor = .secondarySystemBackground
         overrideUserInterfaceStyle = .dark
         }
     

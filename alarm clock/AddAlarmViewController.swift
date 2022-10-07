@@ -21,6 +21,10 @@ protocol UpadteRepeatLabelDelegate:AnyObject{
     func updateRepeatLabel(selectedDay:Set<Day>)
 }
 
+protocol EdingModelWithIndexPath: AnyObject{
+    func update(alarm: AlarmModel, indexPath:IndexPath)
+}
+
 class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     //MARK: - UI
@@ -56,8 +60,13 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    weak var updateAlarmListDelegate: UpdateAlaramListDelegate?
-  
+   weak var updateAlarmListDelegate: UpdateAlaramListDelegate?
+    
+    weak var editingModelWithIndexPath: EdingModelWithIndexPath?
+    
+    //MARK: - checkmode
+    var indexPath: IndexPath?
+    
     //MARK: - tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return titles.count
@@ -115,6 +124,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         setLayouts()
         setupTableView()
         datePicker.addTarget(self, action: #selector(changeDate), for: .valueChanged)
+        datePicker.date = alarmModel.time
     }
     
     //MARK: - set navigation
@@ -154,7 +164,11 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func saveAlarm () {
+        if let indexPath = indexPath {
+        editingModelWithIndexPath?.update(alarm: alarmModel, indexPath: indexPath)
+        }else{
         updateAlarmListDelegate?.updateAlarmList(alarmData: alarmModel)
+        }
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -218,5 +232,9 @@ extension AddAlarmViewController {
             
         }
     }
+    
+//    enum Status: Int, CaseIterable {
+//        case edit = 0, add
+//    }
 }
 

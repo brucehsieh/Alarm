@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import UserNotifications
 
-struct AlarmModel {
+struct AlarmModel: Codable {
     
     // store property
     var time: Date = Date()
@@ -54,7 +55,7 @@ struct AlarmModel {
     }
 }
 
-enum Day: Int, CaseIterable {
+enum Day: Int, CaseIterable, Codable {
     case sun = 0,mon,tues,wed,thur,fri,sat
     
     var dayString: String {

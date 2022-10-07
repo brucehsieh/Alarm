@@ -15,11 +15,11 @@ class AlarmOtherTableViewCell: UITableViewCell {
     var callBackSwitchState:((Bool) -> (Void))?
     
     //MARK: - UI
-    let accessorySwitch: UISwitch = {
+    lazy var accessorySwitch: UISwitch = {
         let uiSwitch = UISwitch(frame: .zero)
         uiSwitch.backgroundColor = .lightGray
         uiSwitch.layer.cornerRadius = uiSwitch.frame.height / 2.0
-        uiSwitch.addTarget(AlarmOtherTableViewCell.self, action: #selector(switchChanged), for: .valueChanged)
+        uiSwitch.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
         return uiSwitch
     }()
     
