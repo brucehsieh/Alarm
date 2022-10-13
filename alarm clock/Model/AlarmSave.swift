@@ -7,6 +7,7 @@
 
 import Foundation
 
+// class, structure
 struct AlarmSave{
     
     private let userDefault = UserDefaults.standard
@@ -22,6 +23,10 @@ struct AlarmSave{
     
     init() {
         load()
+    }
+    
+    mutating func switchOn(_ index: Int,_ tableViewCellisOn:Bool){
+        alarms[index].isOn = tableViewCellisOn
     }
     
     mutating func append(_ alarmData:AlarmModel){
@@ -44,7 +49,7 @@ struct AlarmSave{
         }
     }
     
-    private mutating func load() {
+    private mutating func load() throws {
         if let save = userDefault.object(forKey: "data") as? Data {
             let decoder = JSONDecoder()
             if let loadedData = try? decoder.decode(Array<AlarmModel>.self, from: save) {

@@ -10,7 +10,7 @@ import SnapKit
 
 // git
 protocol UpdateAlaramListDelegate: AnyObject{
-    func updateAlarmList(alarmData: AlarmModel)
+    func updateAlarmList(alarmData: AlarmModel, index: Int)
 }
 
 protocol UpdateAlarmLabelDelegate: AnyObject {
@@ -54,6 +54,8 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     
     let titles = AddAlarmCell.allCases
     
+    var tempIndex: Int = 0
+    
     var alarmModel = AlarmModel() {
         didSet{
             addAlarmTableView.reloadData()
@@ -61,8 +63,6 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
    weak var updateAlarmListDelegate: UpdateAlaramListDelegate?
-    
-    weak var editingModelWithIndexPath: EdingModelWithIndexPath?
     
     //MARK: - checkmode
     var indexPath: IndexPath?
@@ -164,11 +164,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func saveAlarm () {
-        if let indexPath = indexPath {
-        editingModelWithIndexPath?.update(alarm: alarmModel, indexPath: indexPath)
-        }else{
-        updateAlarmListDelegate?.updateAlarmList(alarmData: alarmModel)
-        }
+        updateAlarmListDelegate?.updateAlarmList(alarmData: alarmModel, index: tempIndex)
         self.dismiss(animated: true, completion: nil)
         
     }

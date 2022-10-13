@@ -14,6 +14,7 @@ struct AlarmModel: Codable {
     var time: Date = Date()
     var annotation: String = "鬧鐘"
     var selectDays:Set<Day> = []
+    var isOn: Bool = true
     
     // 計算屬性
     var timeString: String {

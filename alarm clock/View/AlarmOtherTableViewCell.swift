@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class AlarmOtherTableViewCell: UITableViewCell {
-
+    
     static let identifier = "alarmOtherTableViewCell"
     
     var callBackSwitchState:((Bool) -> (Void))?
@@ -34,20 +34,32 @@ class AlarmOtherTableViewCell: UITableViewCell {
         detailTextLabel?.textColor = .lightGray
         detailTextLabel?.font = UIFont.systemFont(ofSize: 20)
     }
-
+    
+    func configure(_ alarm: AlarmModel) {
+        textLabel?.text = alarm.timeString
+        detailTextLabel?.text = alarm.noteLabel
+        accessorySwitch.isOn = alarm.isOn
+        
+        let textColor: UIColor = alarm.isOn ? .white : .lightGray
+        textLabel?.textColor = textColor
+        detailTextLabel?.textColor = textColor
+        
+        textLabel?.textColor = alarm.isOn ? .white : .lightGray
+        
+        if alarm.isOn{
+            textLabel?.textColor = .white
+            detailTextLabel?.textColor = .white
+        } else {
+            textLabel?.textColor = .lightGray
+            detailTextLabel?.textColor = .lightGray
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-@objc func switchChanged(_ sender : UISwitch){
-    callBackSwitchState?(sender.isOn)
-    if sender.isOn{
-        textLabel?.textColor = .white
-        detailTextLabel?.textColor = .white
-        
-    }else{
-        textLabel?.textColor = .lightGray
-        detailTextLabel?.textColor = .lightGray
+    
+    @objc func switchChanged(_ sender : UISwitch){
+        callBackSwitchState?(sender.isOn)
     }
-}
 }
