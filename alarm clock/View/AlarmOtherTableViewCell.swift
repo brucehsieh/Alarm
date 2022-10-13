@@ -43,16 +43,6 @@ class AlarmOtherTableViewCell: UITableViewCell {
         let textColor: UIColor = alarm.isOn ? .white : .lightGray
         textLabel?.textColor = textColor
         detailTextLabel?.textColor = textColor
-        
-        textLabel?.textColor = alarm.isOn ? .white : .lightGray
-        
-        if alarm.isOn{
-            textLabel?.textColor = .white
-            detailTextLabel?.textColor = .white
-        } else {
-            textLabel?.textColor = .lightGray
-            detailTextLabel?.textColor = .lightGray
-        }
     }
     
     required init?(coder: NSCoder) {

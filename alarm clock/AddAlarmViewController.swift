@@ -62,7 +62,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-   weak var updateAlarmListDelegate: UpdateAlaramListDelegate?
+    weak var updateAlarmListDelegate: UpdateAlaramListDelegate?
     
     //MARK: - checkmode
     var indexPath: IndexPath?
@@ -168,11 +168,11 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: true, completion: nil)
         
     }
-
+    
     
     //MARK: - Auto layout
     func setLayouts() {
- 
+        
         // stackView
         let timeStackView = UIStackView(arrangedSubviews: [timeLabel, datePicker])
         timeStackView.axis = .horizontal
@@ -180,7 +180,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.view.addSubview(timeStackView)
         self.view.addSubview(addAlarmTableView)
-
+        
         timeStackView.snp.makeConstraints { make in
             make.top.equalTo(120)
             make.leading.equalTo(24)
@@ -195,7 +195,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     }
 }
 
-    //MARK: - delegate extension
+//MARK: - delegate extension
 extension AddAlarmViewController: UpdateAlarmLabelDelegate {
     func updateAlarmLabel(alarmLabelText: String) {
         alarmModel.annotation = alarmLabelText
@@ -208,7 +208,7 @@ extension AddAlarmViewController: UpadteRepeatLabelDelegate{
     }
 }
 
-    //MARK: - Nested type
+//MARK: - Nested type
 extension AddAlarmViewController {
     enum AddAlarmCell: Int, CaseIterable {
         case repeatAlarm = 0, addAlarm, sound, snooze
@@ -228,9 +228,5 @@ extension AddAlarmViewController {
             
         }
     }
-    
-//    enum Status: Int, CaseIterable {
-//        case edit = 0, add
-//    }
 }
 

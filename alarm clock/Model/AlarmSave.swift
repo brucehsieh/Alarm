@@ -49,7 +49,7 @@ struct AlarmSave{
         }
     }
     
-    private mutating func load() throws {
+    private mutating func load(){
         if let save = userDefault.object(forKey: "data") as? Data {
             let decoder = JSONDecoder()
             if let loadedData = try? decoder.decode(Array<AlarmModel>.self, from: save) {
